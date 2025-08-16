@@ -14,6 +14,10 @@
 ├── docker
 │   └── mysql
 │       ├── Dockerfile
+│       ├── initdb
+│       │   ├── data.sql
+│       │   ├── schema.sql
+│       │   └── test-data.sql
 │       └── my.cnf
 ├── docker-compose.yml
 ├── Dockerfile
@@ -25,15 +29,18 @@
 ├── src
 │   ├── main
 │   │   ├── java/...
-│   │   └── resources
-│   │       ├── application.properties
-│   │       ├── application.yml
-│   │       ├── static
-│   │       └── templates
+│   │   └── resources/...
 │   └── test
-│       └── java/...
-└── wrapper
-    └── maven-wrapper.properties
+│       ├── java/...
+│       └── resources/...
+└── target
+    ├── classes
+    │   ├── application.properties
+    │   └── application.yml
+    └── test-classes
+        ├── application.yml
+        ├── data.sql
+        └── schema.sql
 ```
 
 ---
