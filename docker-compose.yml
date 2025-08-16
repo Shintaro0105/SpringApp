@@ -13,15 +13,17 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-  tomcat:
-    build: ./docker/tomcat
-    container_name: tomcat-app
+  app:
+    build: .
+    container_name: springboot-app
     depends_on:
       - mysql
     ports:
       - "8080:8080"
-    volumes:
-      - ./target/myapp.war:/usr/local/tomcat/webapps/myapp.war
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/appdb
+      SPRING_DATASOURCE_USERNAME: appuser
+      SPRING_DATASOURCE_PASSWORD: apppass
 
 volumes:
   mysql_data:
