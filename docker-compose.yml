@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  mysql:
+    build: ./docker/mysql
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  tomcat:
+    build: ./docker/tomcat
+    container_name: tomcat-app
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/myapp.war:/usr/local/tomcat/webapps/myapp.war
+
+volumes:
+  mysql_data:
