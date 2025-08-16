@@ -11,6 +11,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/initdb:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
 
   app:
@@ -24,6 +26,10 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/appdb
       SPRING_DATASOURCE_USERNAME: appuser
       SPRING_DATASOURCE_PASSWORD: apppass
+    volumes:
+      - ./src:/app/src
+      - ./pom.xml:/app/pom.xml
+    command: mvn spring-boot:run
 
 volumes:
   mysql_data:
