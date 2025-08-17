@@ -71,3 +71,10 @@ watch 'docker logs --tail 100 コンテナid'
 - In-memory users for development/testing
 
 ---
+## License
+
+This project uses Bootstrap templates licensed under the MIT License.  
+See the [LICENSE](./LICENSE) file for details.
+
+Copyright (c) 2013-2021 Start Bootstrap LLC  
+Released under the MIT License.
