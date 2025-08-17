@@ -43,6 +43,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // 静的リソースは認証不要
                 .requestMatchers("/login").permitAll() // ログインページは認証不要
+                .requestMatchers("/register").permitAll()
                 .anyRequest().authenticated() // その他のページは認証が必要
             )
             .formLogin(form -> form
