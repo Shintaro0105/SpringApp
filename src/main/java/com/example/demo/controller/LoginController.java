@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
 
     /**
      * ログイン画面を表示
@@ -56,6 +60,8 @@ public class LoginController {
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("userList", userList);
         model.addAttribute("message", "ログインに成功しました！");
+
+        // model.addAttribute("password", passwordEncoder.encode("password"));
         
         return "userList";
     }

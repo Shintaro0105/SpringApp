@@ -1,7 +1,3 @@
--- データベース作成
-CREATE DATABASE IF NOT EXISTS demo_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE demo_db;
-
 -- ユーザーテーブル作成
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ユーザーID',
@@ -19,6 +15,6 @@ CREATE TABLE users (
 -- 初期データ挿入
 -- パスワード: password123 (BCryptでハッシュ化)
 INSERT INTO users (user_name, password, role, enabled) VALUES 
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9/BpFUCAdFX.TOy', 'ADMIN', TRUE),
-('testuser', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9/BpFUCAdFX.TOy', 'USER', TRUE),
-('demo', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9/BpFUCAdFX.TOy', 'USER', TRUE);
+('admin', '$2a$10$lfGUycjsB.YZ9MOYI6CouucRljbrSUdYpmFxY3fmn52THf3f.gOnG', 'ADMIN', TRUE),
+('testuser', '$2a$10$lfGUycjsB.YZ9MOYI6CouucRljbrSUdYpmFxY3fmn52THf3f.gOnG', 'USER', TRUE),
+('demo', '$2a$10$lfGUycjsB.YZ9MOYI6CouucRljbrSUdYpmFxY3fmn52THf3f.gOnG', 'USER', TRUE);
