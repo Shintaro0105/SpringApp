@@ -1,7 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.demo.mapper.UserMapper">
-    <select id="selectMany" resultType="com.example.demo.model.User">
-        select user_id as userId,user_name as userName,password from user
+
+    <!-- 結果セットマッピング -->
+    <resultMap id="UserResultMap" type="com.example.demo.model.User">
+        <id property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+        <result property="password" column="password" />
+        <result property="role" column="role" />
+        <result property="enabled" column="enabled" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <!-- 共通のカラム定義 -->
+    <sql id="userColumns">
+        user_id, user_name, password, role, enabled, created_at, updated_at
+    </sql>
+
+    <!-- ユーザー名でユーザーを検索 -->
+    <select id="findByUserName" parameterType="string" resultMap="UserResultMap">
+        SELECT 
+            <include refid="userColumns"/>
+        FROM users 
+        WHERE user_name = #{userName}
+        AND enabled = TRUE
     </select>
+
+    <!-- 全ユーザーを取得 -->
+    <select id="findAll" resultMap="UserResultMap">
+        SELECT 
+            <include refid="userColumns"/>
+        FROM users 
+        WHERE enabled = TRUE 
+        ORDER BY user_id ASC
+    </select>
+
+    <!-- ユーザーIDでユーザーを検索 -->
+    <select id="findById" parameterType="int" resultMap="UserResultMap">
+        SELECT 
+            <include refid="userColumns"/>
+        FROM users 
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- ユーザーを新規登録 -->
+    <insert id="insert" parameterType="com.example.demo.model.User" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO users (
+            user_name, 
+            password, 
+            role, 
+            enabled, 
+            created_at, 
+            updated_at
+        ) VALUES (
+            #{userName}, 
+            #{password}, 
+            #{role}, 
+            #{enabled}, 
+            NOW(), 
+            NOW()
+        )
+    </insert>
+
+    <!-- ユーザー情報を更新 -->
+    <update id="update" parameterType="com.example.demo.model.User">
+        UPDATE users 
+        SET 
+            user_name = #{userName},
+            password = #{password},
+            role = #{role},
+            enabled = #{enabled},
+            updated_at = NOW()
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- ユーザーを削除（論理削除） -->
+    <update id="deleteById" parameterType="int">
+        UPDATE users 
+        SET 
+            enabled = FALSE,
+            updated_at = NOW()
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- ユーザー名の重複チェック -->
+    <select id="countByUserName" parameterType="string" resultType="int">
+        SELECT COUNT(*) 
+        FROM users 
+        WHERE user_name = #{userName}
+    </select>
+
+    <!-- 条件付きユーザー検索 -->
+    <select id="findByConditions" parameterType="map" resultMap="UserResultMap">
+        SELECT 
+            <include refid="userColumns"/>
+        FROM users 
+        <where>
+            <if test="userName != null and userName != ''">
+                AND user_name LIKE CONCAT('%', #{userName}, '%')
+            </if>
+            <if test="role != null and role != ''">
+                AND role = #{role}
+            </if>
+            <if test="enabled != null">
+                AND enabled = #{enabled}
+            </if>
+        </where>
+        ORDER BY user_id ASC
+        <if test="limit != null">
+            LIMIT #{limit}
+        </if>
+        <if test="offset != null">
+            OFFSET #{offset}
+        </if>
+    </select>
+
+    <!-- ユーザー数をカウント -->
+    <select id="countUsers" resultType="int">
+        SELECT COUNT(*) 
+        FROM users 
+        WHERE enabled = TRUE
+    </select>
+
 </mapper>

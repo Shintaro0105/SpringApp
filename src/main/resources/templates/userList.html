@@ -13,14 +13,14 @@
             <tr>
                 <th>user_id</th>
                 <th>user_name</th>
-                <th>password</th>
+                <th>role</th>
             </tr>
             <!-- ControllerからuserListを受け取りth:each文で配列の要素を回します。 -->
             <!-- 引数のuserにはUserクラスのインスタンスが格納されているので、フィールド名を指定すれば値を引き出せます。 -->
             <tr th:each="user : ${userList}">
                 <td th:text="${user.userId}"></td>
                 <td th:text="${user.userName}"></td>
-                <td th:text="${user.password}"></td>
+                <td th:text="${user.role}"></td>
             </tr>
 
         </table>

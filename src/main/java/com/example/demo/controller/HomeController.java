@@ -19,16 +19,18 @@ public class HomeController {
     UserService userService;
 
     //userListのアドレスにアクセスした際にGetメソッドを実行。
-    @GetMapping("/userList")
-    public String getUserList(Model model) {
+    // @GetMapping("/userList")
+    // public String getUserList(Model model) {
 
-    	//@Autowiredで作成したインスタンスを元に、userServiceのメソッドを呼び出す。
-        List<User> userList = userService.selectMany();
-        //userServiceから受け取ったデータをView側に渡す。
-        model.addAttribute("userList", userList);
+    // 	//@Autowiredで作成したインスタンスを元に、userServiceのメソッドを呼び出す。
+    //     List<User> userList = userService.getAllUsers();
+    //     System.out.println("取得件数 = " + userList.size());
+    //     userList.forEach(u -> System.out.println(u.getUserName()));
+    //     //userServiceから受け取ったデータをView側に渡す。
+    //     model.addAttribute("userList", userList);
 
-    	//template配下のファイル名を指定することでViewを呼び出せる。
-        return "userList";
-    }
+    // 	//template配下のファイル名を指定することでViewを呼び出せる。
+    //     return "userList";
+    // }
 
 }

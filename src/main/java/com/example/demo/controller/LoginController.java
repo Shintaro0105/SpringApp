@@ -1,33 +1,70 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-//import SpringLogin.app.service.UserService;
+import com.example.demo.service.UserService;
+import com.example.demo.model.User;
+import java.util.List;
 
 @Controller
 public class LoginController {
 
-//    @Autowired
-//    UserService userService;
+    @Autowired
+    private UserService userService;
 
+    /**
+     * ログイン画面を表示
+     * Spring Securityが自動的にログイン処理を行うため、フォームの表示のみを担当
+     */
     @GetMapping("/login")
-    public String getSignUp(Model model) {
+    public String showLoginForm(@RequestParam(value = "error", required = false) String error,
+                               @RequestParam(value = "logout", required = false) String logout,
+                               Model model) {
+        
+        // エラーメッセージの設定
+        if (error != null) {
+            model.addAttribute("errorMessage", "ユーザー名またはパスワードが間違っています。");
+        }
+        
+        // ログアウトメッセージの設定
+        if (logout != null) {
+            model.addAttribute("logoutMessage", "正常にログアウトしました。");
+        }
+        
         return "login";
     }
     
-    //FormのSubmitを押すとPostメソッドがリクエストされます。（）に書かれたURLのリクエストを受け取るとこのメソッドが発動します。
-    @PostMapping("/login")
-    public String postSignUp(Model model) {
-    	/*
-    	今回はリダイレクトを使います。画面遷移などファイル間をまたぐ場合はリダイレクト使います。
-    	イメージ的にはGetメソッドを呼び出していると考えていいでしょう。
-    	試しにリダイレクトせず通常のフォワード(return "ｘｘｘ";)とすると画面自体は表示されますがURLが変わりません。
-    	こうすると、遷移先で受け取りたいデータなどが受け取れないことがあるので、リダイレクトを使用したほうが良いでしょう。
-    	*/
+    /**
+     * ユーザー一覧画面を表示
+     */
+    @GetMapping("/userList")
+    public String showUserList(Model model) {
+        // 現在ログインしているユーザー情報を取得
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        
+        // MyBatisを使用してユーザー一覧を取得
+        List<User> userList = userService.getAllUsers();
+        User currentUser = userService.findByUserName(currentUserName);
+        
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("userList", userList);
+        model.addAttribute("message", "ログインに成功しました！");
+        
+        return "userList";
+    }
+    
+    /**
+     * ホーム画面（ダッシュボード）
+     */
+    @GetMapping("/")
+    public String home() {
         return "redirect:/userList";
     }
-
 }
