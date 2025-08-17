@@ -3,11 +3,10 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.repository.UserDao;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 
 @Transactional //メソッド内で例外が発生した際にロールバックつまりエラーが起きる直前に戻るアノテーション。
@@ -15,12 +14,11 @@ import com.example.demo.model.User;
 public class UserService {
 
     @Autowired
-    @Qualifier("UserDaoJdbcImpl") //DAOはインターフェースをimplimentsするのが定石らしく、implimentsするファイルを明示的にする。
-    UserDao dao;
+    private UserMapper userMapper;
 
     //Daoのメソッドを実行。戻り値をList型でControllerに引き渡す。
     public List<User> selectMany() {
-        return dao.selectMany();
+        return userMapper.selectMany();
 
     }
 
