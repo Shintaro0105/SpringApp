@@ -50,6 +50,12 @@
                                     <div th:if="${logoutMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
                                         <span th:text="${logoutMessage}"></span>
                                     </div>
+
+                                    <!-- アカウント作成成功メッセージ -->
+                                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <span th:text="${successMessage}"></span>
+                                    </div>
+
                                     <form th:action="@{/login}" method="post" class="user">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
