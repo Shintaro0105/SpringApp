@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login") // ログイン処理のURL
                 .usernameParameter("username") // ユーザー名のパラメータ名
                 .passwordParameter("password") // パスワードのパラメータ名
-                .defaultSuccessUrl("/userList", true) // ログイン成功時のリダイレクト先
+                .defaultSuccessUrl("/index", true) // ログイン成功時のリダイレクト先
                 .failureUrl("/login?error=true") // ログイン失敗時のリダイレクト先
                 .permitAll()
             )

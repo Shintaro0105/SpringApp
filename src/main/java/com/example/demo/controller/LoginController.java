@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.service.UserService;
 import com.example.demo.model.User;
@@ -47,7 +48,7 @@ public class LoginController {
     /**
      * ユーザー一覧画面を表示
      */
-    @GetMapping("/userList")
+    @GetMapping("/index")
     public String showUserList(Model model) {
         // 現在ログインしているユーザー情報を取得
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,7 +64,7 @@ public class LoginController {
 
         // model.addAttribute("password", passwordEncoder.encode("password"));
         
-        return "userList";
+        return "index";
     }
     
     /**
@@ -71,6 +72,12 @@ public class LoginController {
      */
     @GetMapping("/")
     public String home() {
-        return "redirect:/userList";
+        return "redirect:/index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("successMessage", "ログアウトしました");
+        return "redirect:/login";
     }
 }
