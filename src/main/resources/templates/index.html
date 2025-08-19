@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
@@ -368,7 +368,9 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">ようこそ！旅行予約サイトへ</h1>
-                        <a href="#" class="btn btn-primary btn-sm shadow-sm"><i class="fas fa-user fa-sm text-white-50"></i> 会員登録</a>
+                        <div sec:authorize="isAnonymous()">
+                            <a href="#" class="btn btn-primary btn-sm shadow-sm"><i class="fas fa-user fa-sm text-white-50"></i> 会員登録</a>
+                        </div>
                     </div>
 
                     <!-- Search Bar -->
