@@ -75,9 +75,9 @@ public class LoginController {
         return "redirect:/index";
     }
 
-    @GetMapping("/logout")
-    public String logout(RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("successMessage", "ログアウトしました");
-        return "redirect:/login";
-    }
+    // @GetMapping("/logout")
+    // public String logout(RedirectAttributes redirectAttributes) {
+    //     redirectAttributes.addFlashAttribute("successMessage", "ログアウトしました");
+    //     return "redirect:/login";
+    // }
 }
