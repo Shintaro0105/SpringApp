@@ -66,11 +66,6 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                 .maximumSessions(1) // 同時セッション数を制限
                 .maxSessionsPreventsLogin(false) // 新しいログインを優先
-            )
-            .rememberMe(remember -> remember
-                .key("mySecretKey") // Cookieの暗号化用キー（任意文字列）
-                .tokenValiditySeconds(7 * 24 * 60 * 60) // 7日間有効
-                .userDetailsService(userDetailsService()) // UserDetailsServiceを指定
             );
 
         return http.build();
